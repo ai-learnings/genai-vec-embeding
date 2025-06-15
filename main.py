@@ -16,7 +16,7 @@ mongoCollection = mongoClient["llm-vec-embeding-db"]["embeddings"]
 
 # To generate document embedings
 # embedingModelName = "voyage-3.5"
-# voClient = voyageai.Client(api_key="pa-MPM8CRqKQLOefAB1Us_GZeri6dE1gsdBszfeNlZv8TH")
+# voClient = voyageai.Client(api_key="")
 
 embedingModelName = "mxbai-embed-large"
 ollama = OllamaEmbeddings(
