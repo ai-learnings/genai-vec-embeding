@@ -1,26 +1,29 @@
 import json
+import os
 from typing import List
 
 import voyageai
-
+from dotenv import load_dotenv
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
-
 from langchain_ollama import OllamaEmbeddings
 
-# connect to your Atlas cluster
-uri = "mongodb://localhost:27017/?directConnection=true" # this is mongodb atlas (mongodb/mongodb-atlas-local:8.0.9)
+# Load environment variables from .env file
+load_dotenv()
+
+# Connect to your Atlas cluster
+uri = os.getenv("MONGODB_URI")
 mongoClient = MongoClient(uri, server_api=ServerApi('1'))
-mongoCollection = mongoClient["llm-vec-embeding-db"]["embeddings"]
+mongoCollection = mongoClient[os.getenv("MONGODB_DATABASE")][os.getenv("MONGODB_COLLECTION")]
 
 
 # To generate document embedings
-# embedingModelName = "voyage-3.5"
-# voClient = voyageai.Client(api_key="")
+# embedingModelName = os.getenv("VOYAGE_MODEL")
+# voClient = voyageai.Client(api_key=os.getenv("VOYAGE_API_KEY"))
 
-embedingModelName = "mxbai-embed-large"
+embedingModelName = os.getenv("OLLAMA_MODEL")
 ollama = OllamaEmbeddings(
-    base_url="localhost:11434",
+    base_url=os.getenv("OLLAMA_BASE_URL"),
     model=embedingModelName
 )
 
